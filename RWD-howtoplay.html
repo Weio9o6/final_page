@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        html {
+            background-color: rgb(238, 238, 238);
+        }
+        .second_bar a{
+            display: block;
+            padding: 10px 20px;
+        }
+        #menu-control{
+            display: none;
+        }
+        #menu-control:checked ~ .second_bar{
+            left: 0;
+        }
+        .second_bar{
+            position: fixed;
+            background-color: rgb(189, 189, 189);
+            top: 8%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 1s;
+            z-index: 2;
+        }
+        .second_bar a{
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .title_bar {
+            width: 100%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            background-color: #aaa;
+            position: fixed;
+            z-index: 1;
+        }
+
+        .title_bar .logo {
+            margin: 5px 10px;
+            width: 15%;
+            height: 50px;
+        }
+
+        .title_bar .logo img {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+
+        .title_bar .search {
+            flex-grow: 1;
+        }
+
+        .hb {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            background-color: orange;
+            margin-right: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .hb span {
+            width: 32px;
+            height: 2px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        .title_bar .login a {
+            display: none;
+        }
+        .slider_container {
+            margin: 30px auto;
+            width: 400px;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+            /* border: 10px solid;
+            border-top-color: #856036;
+            border-left-color: #5d4426;
+            border-bottom-color: #856036;
+            border-right-color: #5d4426;
+            background-color: #f5f5f5; */
+        }
+        .slider_container:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            width: 100%;
+            height: 100%;
+            background-image: url(pic/view23.jpeg);
+            animation: bk 25s linear;
+        }
+        .slider_container div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            left: 100%;
+            width: 100%;
+            -webkit-animation: round 25s linear infinite;
+            animation: round 25s linear infinite;
+        }
+        .slider_container div img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes round {
+            4% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: 0;
+                /* 0 - 1秒 滑入*/
+            }
+            20% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: 0;
+                /* 1- 5秒靜止*/
+            }
+            24% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: -100%;
+                /* 5-6秒滑出*/
+            }
+            26% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+                left: -100%;
+                /* 6-6.5秒變透明*/
+            } 
+            28% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+                left: 100%;
+                /* 6.5-7秒回到起始位置*/
+            } 
+        }
+        @keyframes bk {
+            0% {
+                left: 0;
+                /* 初始位置*/
+            }
+            4% {
+                left: -100%;
+                /* 0 - 1秒 滑出*/
+            }   
+        }
+
+        @keyframes bk {
+            0% {
+                left: 0;
+                /* 初始位置*/
+            }
+            4% {
+                left: -100%;
+                /* 0 - 1秒 滑出*/
+            }  
+        }
+        .slider_container div:nth-child(5) {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+        .slider_container div:nth-child(4) {
+            -webkit-animation-delay: 5s;
+            animation-delay: 5s;
+        }
+        .slider_container div:nth-child(3) {
+            -webkit-animation-delay: 10s;
+            animation-delay: 10s;
+        }
+        .slider_container div:nth-child(2) {
+            -webkit-animation-delay: 15s;
+            animation-delay: 15s;
+        }
+        .slider_container div:nth-child(1) {
+            -webkit-animation-delay: 20s;
+            animation-delay: 20s;
+        }
+        .rwd_slider_container_wrapper {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: -99;
+        }
+        .rwd_slider_container {
+            position: relative;
+            display: block;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            padding-bottom: 70%;
+            box-sizing: border-box;
+            /* background-color: red; */
+            z-index: -99;
+        }
+        .rwd_slider_container .slider_container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%;
+            margin: 0;
+            box-sizing: border-box;
+            z-index: -1;
+        }
+
+        .discover_txt {
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 0.1em 0.1em 0.2em black;
+            color: white;
+            position: absolute;
+            left: 20%;
+            transform: translateX(-50%);
+            top: 18%;
+        }
+
+        .discover {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            height: 40px;
+            margin: auto;
+            padding: 5px;
+            background-color: white;
+            border: 1px solid white;
+            box-shadow: 3px 3px 7px rgb(139, 139, 139);
+            border-radius: 5px;
+            align-items: center;
+            position: absolute;
+            margin: 0;
+            top: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .banner input {
+            font-size: 18px;
+            height: 50px;
+            width: 90%;
+            border: 1px white;
+        }
+
+        .discover_search_btn {
+            width: 70px;
+            height: 20px;
+            background-color: orange;
+            border: 1px solid orange;
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .discover_search_btn a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+        .kind_vacation{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            margin-bottom: 70px;
+            margin-top: -10%;
+        }
+        .kind_vacation_item{
+            width: calc(33.333333% - 50px);
+            height: auto;
+            margin: 15px;
+            background-color: rgb(218, 218, 218);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        .kind_vacation .kind_vacation_icon{
+            width: 20px;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+        .kind_vacation .kind_vacation_icon img{
+            width: 100%;
+            height: 100%;
+        }
+        /* .kind_vacation .kind_vacation_txt{
+            width: 100%;
+        } */
+        .next_btn{
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            border-radius: 50%;
+            background-color: rgb(218, 218, 218);
+            position: absolute;
+            margin: 0;
+            right: 2%;
+            top: 103%;
+        }
+        .next_btn a img{
+            width: 20px;
+            height: 20px;
+            padding-left: 7px;
+            padding-top: 5px;
+        }
+        .phone_trip_area_title{
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            margin-bottom: 8%;
+        }
+        .phone_trip_area_title h2{
+            font-size: 40px;
+        }
+        .trip_section{
+            width: 100%;
+            /* display: flex; */
+            margin: auto;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        .trip_section .trip_area{
+            display: none;
+        }
+        .trip_section .trip_area_item{
+            background-color: white;
+            width: calc(100% - 32px);
+            border: 1px solid;
+            margin: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+        .trip_area_item_pic img{
+            width: 100%;
+            height: 130px;
+            margin-bottom: -30px;
+            object-fit: cover;
+        }
+        .trip_area .trip_area_txt{
+            padding-left: 15px;
+            position: absolute;
+        }
+        .trip_area .trip_area_txt h2{
+            font-size: 25px;
+            margin-bottom: 7px;
+            color: white;
+            text-shadow: 0.1em 0.1em 0.2em black;
+        }
+        .trip_area .trip_area_txt p{
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0.1em 0.1em 0.2em black;
+        }
+        .discount_bar{
+            display: flex;
+        }
+        .discount_bar .discount{
+            background-color:orange;
+            color: white;
+            padding:3px;
+            border: 1px solid orange;
+            border-radius: 4px;
+            margin: 0px 5px;
+        }
+        .discount_bar .hot_sale{
+            background-color:rgb(255, 60, 0);
+            color: white;
+            padding:3px;
+            border: 1px solid rgb(255, 60, 0);
+            border-radius: 4px;
+            margin: 0px 5px;
+        }
+        .trip_area_item_txt{
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            margin-top: 5px;
+            padding: 5px;
+        }
+        .trip_area_item_txt p{
+            font-size: 15px;
+            margin-top: 3px;
+            color: gray;
+            
+        }
+        .trip_area_item_txt h3{
+            color: orange;
+            flex-grow: 1;
+        }
+        .trip_section_nextbtn{
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            border-radius: 50%;
+            background-color: rgb(218, 218, 218);
+            position: absolute;
+            margin: 0;
+            right: 3%;
+            top: 101%;
+        }
+        .trip_section_nextbtn a img{
+            width: 20px;
+            height: 20px;
+            padding-left: 7px;
+            padding-top: 5px;
+        }
+        .footer_color{
+            width: 100%;
+            background-color: rgb(117, 117, 117);
+        }
+        .footer_bar{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+        }
+        .footer_bar .footer_logo{
+            width: 20%;
+            height: auto;
+            margin-right: auto;
+        }
+        .footer_bar .footer_logo img{
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+        .footer_bar h2{
+            margin-right: 5px;
+            color: white;
+        }
+        .footer .subscribe input{
+            font-size:16px;
+            height:30px;
+            width:200px; 
+            border: 1px solid black;
+        }
+        
+        .footer_bar button{
+            font-size: 16px;
+            width: 50px;
+            height: 35px;
+            background-color: orange;
+            color: white;
+        }
+        .about{
+            width: calc(100% - 20px);
+            margin: auto;
+            display: flex;
+            padding: 10px;
+        }
+        .know_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .together_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .use_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact_us{
+            width: 25%;
+        }
+        .footer .about p{
+            font-size: 16px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .footer .about a{
+            text-decoration: none;
+            font-size: 15px;
+            color:black;
+            padding: 5px;    
+        }
+        .app .app_pic{
+            width: 30px;
+            height: 30px;
+            margin: 10px;
+        }
+        .app .app_pic img{
+            width: 100%;
+            height: 100%;
+        }
+        .toTop-arrow {
+            width: 3rem;
+            height: 3rem;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-radius: 33%;
+            opacity: 0.6;
+            background: #000;
+            cursor: pointer;
+            position:fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+        }
+        .toTop-arrow::before, .toTop-arrow::after {
+            width: 25px;
+            height: 6px;
+            border-radius: 3px;
+            background: #f90;
+            position: absolute;
+            content: "";
+        }
+        .toTop-arrow::before {
+            transform: rotate(-45deg) translate(0, -50%);
+            left: 0.42rem;
+        }
+        .toTop-arrow::after {
+            transform: rotate(45deg) translate(0, -50%);
+            right: 0.42rem;
+        }
+        .toTop-arrow:focus {outline: none;}
+
+        @media screen and (min-width:768px){
+            .hb {
+                display: none;
+            }
+
+            .title_bar .login a {
+                display: block;
+                text-decoration: none;
+                font-size: 16px;
+                border: 2px;
+                border-radius: 15px;
+                background-color: rgb(248, 141, 0);
+                color: white;
+                padding: 10px;
+                margin-right: 15px;
+            }
+
+            .title_bar .logo{
+                margin: 5px 20px;
+                width: 140px;
+                height: 50px;
+            }
+
+            .title_bar .login a:hover {
+                background-color: red;
+            }
+
+            .second_bar {
+                display: flex;
+                margin: 0 30px;
+                /* background-color: rgb(218, 139, 139); */
+                background-color: rgb(180, 179, 179);
+                position: fixed;
+                margin: 0;
+                top: 60px;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                height: 6%;
+
+            }
+
+            .second_bar a {
+                text-decoration: none;
+                padding: 10px 0px;
+                margin-left: 30px;
+                font-size: 16px;
+                color: black;
+            }
+
+            .second_bar img {
+                width: 15px;
+                height: 15px;
+                vertical-align: top;
+            }
+
+            .discover_txt {
+                width: 300px;
+                margin: auto;
+                font-size: 50px;
+                font-weight: bold;
+                text-shadow: 0.1em 0.1em 0.2em black;
+                color: white;
+                position: absolute;
+                margin: 0;
+                top: 30%;
+                left: 25%;
+                transform: translateX(-50%);
+            }
+
+            .discover {
+                display: flex;
+                width: 80%;
+                height: 48px;
+                margin: auto;
+                padding: 5px;
+                background-color: white;
+                border: 1px solid white;
+                box-shadow: 3px 3px 7px rgb(139, 139, 139);
+                border-radius: 5px;
+                align-items: center;
+                position: absolute;
+                margin: 0;
+                top: 45%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .banner input {
+                font-size: 20px;
+                height: 50px;
+                width: 300px;
+                border: 1px white
+            }
+
+            .discover_search_btn {
+                width: 70px;
+                height: 30px;
+                background-color: orange;
+                border: 1px solid orange;
+                border-radius: 5px;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .discover_search_btn a {
+                text-decoration: none;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+                display: block;
+                margin-top: 6px;
+            }
+            .trip_section{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                margin: auto;
+                margin-bottom: 80px;
+                position: relative;
+            }
+
+            .trip_section .trip_area_item{
+                background-color: white;
+                width: calc(50% - 32px);
+                border: 1px solid;
+                margin: 15px;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                box-shadow: 0 0 10px rgba(0,0,0,.1);
+            }
+            .trip_area_item_pic img{
+                width: 100%;
+                height: 130px;
+                margin-bottom: -30px;
+            }
+            .trip_area .trip_area_txt{
+                padding-left: 15px;
+                position: absolute;
+            }
+            .trip_area .trip_area_txt h2{
+                font-size: 25px;
+                margin-bottom: 7px;
+                color: white;
+                text-shadow: 0.1em 0.1em 0.2em black;
+            }
+            .trip_area .trip_area_txt p{
+                font-size: 16px;
+                font-weight: bold;
+                color: white;
+                text-shadow: 0.1em 0.1em 0.2em black;
+            }
+            .discount_bar{
+                display: flex;
+            }
+            .discount_bar .discount{
+                background-color:orange;
+                color: white;
+                padding:3px;
+                border: 1px solid orange;
+                border-radius: 4px;
+                margin: 0px 5px;
+            }
+            .discount_bar .hot_sale{
+                background-color:rgb(255, 60, 0);
+                color: white;
+                padding:3px;
+                border: 1px solid rgb(255, 60, 0);
+                border-radius: 4px;
+                margin: 0px 5px;
+            }
+            .trip_area_item_txt{
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-top: 5px;
+                padding: 5px;
+            }
+            .trip_area_item_txt p{
+                font-size: 15px;
+                margin-top: 3px;
+                color: gray;
+                
+            }
+            .trip_area_item_txt h3{
+                color: orange;
+                flex-grow: 1;
+            }
+            .trip_section_nextbtn{
+                width: 30px;
+                height: 30px;
+                border: 1px solid white;
+                border-radius: 50%;
+                background-color: rgb(218, 218, 218);
+                position: absolute;
+                margin: 0;
+                right: 3%;
+                top: 100%;
+            }
+            .trip_section_nextbtn a img{
+                width: 20px;
+                height: 20px;
+                padding-left: 7px;
+                padding-top: 5px;
+            }
+            
+            
+        }
+        @media screen and (min-width:1200px) {
+            .discover {
+                left: 50%;
+            }
+            .discover input{
+                font-size:20px;
+                height:30px;
+                width:200px;
+                border-radius: 15px; 
+                border: 1px solid white;
+            }
+            .discover_txt{
+                top: 40%;
+                left: 20%;
+            }
+            .discover{
+                top: 60%;
+            }
+            .kind_vacation{
+                width: 90%;
+                margin: auto;
+                display: flex;
+                flex-wrap: unset;
+                position: relative;
+                margin-bottom: 70px;
+                margin-top: -10%;
+            }
+            .kind_vacation_item{
+                width: calc(15% - 30px);
+                height: 130px;
+                margin: 15px;
+                background-color: rgb(218, 218, 218);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .kind_vacation .kind_vacation_icon{
+                width: 30px;
+                height: 30px;
+                margin-bottom: 10px;
+            }
+            .kind_vacation .kind_vacation_icon img{
+                width: 100%;
+                height: 100%;
+            }
+            .next_btn{
+                width: 30px;
+                height: 30px;
+                border: 1px solid white;
+                border-radius: 50%;
+                background-color: rgb(218, 218, 218);
+                position: absolute;
+                margin: 0;
+                right: -42px;
+                top: 70px;
+            }
+            .next_btn a img{
+                width: 20px;
+                height: 20px;
+                padding-left: 7px;
+                padding-top: 5px;
+            }
+            .phone_trip_area_title{
+                display: none;
+            }
+            .trip_section{
+                width: 1200px;
+                display: flex;
+                margin: auto;
+                margin-bottom: 80px;
+                position: relative;
+            }
+            .trip_section .trip_area{
+                display: block;
+            }
+            .trip_section .trip_area{
+                width: 208px;
+                height: 260px;
+                border: 1px solid;
+                margin: 15px;
+                overflow: hidden;
+            }
+            .trip_section .trip_area img{
+                width: 208px;
+                height: 260px;
+                margin-bottom: -70px;
+                
+            }
+            .trip_section .trip_area img:hover{
+                transform: scale(1.2);
+                transition: 0.8s;
+            }
+
+            .trip_section .trip_area_item{
+                background-color: white;
+                width: 176px;
+                border: 1px solid;
+                margin: 15px;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                box-shadow: 0 0 10px rgba(0,0,0,.1);
+            }
+            .trip_section .trip_area_item:hover{
+                box-shadow: 5px 5px 10px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .trip_area_item_pic img{
+                width: 208px;
+                height: 130px;
+                margin-bottom: -30px;
+            }
+            .trip_area .trip_area_txt{
+                padding-left: 15px;
+                position: absolute;
+            }
+            .trip_area .trip_area_txt h2{
+                font-size: 25px;
+                margin-bottom: 7px;
+                color: white;
+                text-shadow: 0.1em 0.1em 0.2em black;
+            }
+            .trip_area .trip_area_txt p{
+                font-size: 16px;
+                font-weight: bold;
+                color: white;
+                text-shadow: 0.1em 0.1em 0.2em black;
+            }
+            .discount_bar{
+                display: flex;
+            }
+            .discount_bar .discount{
+                background-color:orange;
+                color: white;
+                padding:3px;
+                border: 1px solid orange;
+                border-radius: 4px;
+                margin: 0px 5px;
+            }
+            .discount_bar .hot_sale{
+                background-color:rgb(255, 60, 0);
+                color: white;
+                padding:3px;
+                border: 1px solid rgb(255, 60, 0);
+                border-radius: 4px;
+                margin: 0px 5px;
+            }
+            .trip_area_item_txt{
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                margin-top: 5px;
+                padding: 5px;
+            }
+            .trip_area_item_txt p{
+                font-size: 15px;
+                margin-top: 3px;
+                color: gray;
+                
+            }
+            .trip_area_item_txt h3{
+                color: orange;
+                flex-grow: 1;
+            }
+            .trip_section_nextbtn{
+                width: 30px;
+                height: 30px;
+                border: 1px solid white;
+                border-radius: 50%;
+                background-color: rgb(218, 218, 218);
+                position: absolute;
+                margin: 0;
+                right: -24px;
+                top: 150px;
+            }
+            .trip_section_nextbtn a img{
+                width: 20px;
+                height: 20px;
+                padding-left: 7px;
+                padding-top: 5px;
+            }
+            .footer_color{
+                width: 100%;
+                background-color: rgb(117, 117, 117);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .footer_bar{
+                width: 100%;
+                margin: auto;
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            .footer_bar .footer_logo{
+                width: 140px;
+                height: 50px;
+                margin-right: auto;
+            }
+            .footer_bar .footer_logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .footer_bar h2{
+                margin-right: 5px;
+                color: white;
+            }
+            .footer_bar button{
+                font-size: 16px;
+                width: 50px;
+                height: 35px;
+                background-color: orange;
+                color: white;
+            }
+            .about{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+            }
+            .know_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .together_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .use_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .contact_us{
+                width: 300px;
+            }
+            .footer .about p{
+                font-size: 16px;
+                color: white;
+                margin-bottom: 10px;
+            }
+            .footer .about a{
+                text-decoration: none;
+                font-size: 15px;
+                color:black;
+                padding: 5px;    
+            }
+            .app{
+                display: flex;
+            }
+            .app .app_pic{
+                width: 30px;
+                height: 30px;
+                margin: 10px;
+            }
+            .app .app_pic img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="menu-control">
+
+    <div class="title_bar">
+        <div class="logo">
+            <a href="RWD-homepage.html">
+                <img src="pic/sometrip.png" alt="">
+            </a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="探索目的地/活動" style="font-size:16px;height:30px;width:200px;border-radius: 15px; border: 1px solid white;">
+        </div>
+        <div class="login">
+            <a href="#">登入</a>
+        </div>
+        <label for="menu-control" class="hb">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+    <nav class="second_bar">
+        <a href="#" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">探索目的地</a>
+        <a href="RWD-howtoplay.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">特色體驗</a>
+        <a href="RWD-food.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">美食品嘗</a>
+        <a href="RWD-wificard.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">網路卡</a>
+        <a href="RWD-mustknow.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">出國須知</a>
+    </nav>
+    <div class="banner">
+        <div class="rwd_slider_container_wrapper">
+            <div class="rwd_slider_container">
+                <div class="slider_container" >
+                    <div>
+                        <img src="pic/view06.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view07.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view08.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view09.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view11.jpg" alt="">
+                    </div>
+                </div><!-- end of .pure_slider_container -->
+            </div><!-- end of .embed-responsive -->
+        </div><!-- end of .embed-responsive-box -->
+        <div class="discover_txt">特色體驗</div>
+        <div class="discover">
+            <div class="discover_search">
+                <input type="text" placeholder="想做什麼? 玩什麼?">
+            </div>
+            <div class="discover_search_btn">
+                <a href="#">搜尋</a>
+            </div>
+        </div>
+    </div>
+    <div class="kind_vacation">
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/amusement-park.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>主題&水上樂園</p>
+            </div>
+        </div>
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/camping-tent.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>一般&豪華露營</p>
+            </div>
+        </div>
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/ship.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>遊船&遊艇觀光</p>
+            </div>
+        </div>
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/museum.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>博物館&美術館</p>
+            </div>
+        </div>
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/massage.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>SPA&按摩</p>
+            </div>
+        </div>
+        <div class="kind_vacation_item">
+            <div class="kind_vacation_icon">
+                <img src="pic/extreme-sport.png" alt="">
+            </div>
+            <div class="kind_vacation_txt">
+                <p>極限運動</p>
+            </div>
+        </div>
+        <div class="next_btn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="phone_trip_area_title">
+        <h2>台灣</h2>
+    </div>
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/taiwan.jpg" alt="">
+            <div class="trip_area_txt">
+                <h2>台灣</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <a href="RWD-howtoplayinfo.html"><img src="pic/ocean.webp" alt=""></a>
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2><a href="RWD-howtoplayinfo.html" style="text-decoration: none;color:black;">94折起|夏日限定璀璨之海|墾丁|屏東海生館|門票</a></h2>
+                <p>100K+人參加</p>
+                <h3>★4.5</h3>
+                <h2>NT$ 420</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/oceanpark.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>限時86折起|花蓮|遠雄海洋公園|門票|即買即用</h2>
+                <p>350K+人參加</p>
+                <h3>★4.3</h3>
+                <h2>NT$ 790</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/turtle.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>限時75折起|宜蘭|龜山島登島|賞鯨|環繞龜山島體驗</h2>
+                <p>40K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 900</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/deer.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>屏東|墾丁鹿境梅花鹿生態園區|門票</h2>
+                <p>60K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 171</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>日本</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/ja.jfif" alt="">
+            <div class="trip_area_txt">
+                <h2>日本</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/tokoyoo.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>東京豐洲teamLab Planets TOKYO門票</h2>
+                <p>10K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 801</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/balll.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>日本環球影城|電子門票</h2>
+                <p>8K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 1,351</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/mii.jpg" style="object-position: top;" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>飯能嚕嚕米主題樂園門票</h2>
+                <p>3K+人參加</p>
+                <h3>★4.5</h3>
+                <h2>NT$ 575</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/daplay.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【限時買1送1】大阪樂遊券</h2>
+                <p>500K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 500</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>香港&澳門</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/hkkk.jpg" alt="">
+            <div class="trip_area_txt">
+                <h2>香港&澳門</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/hkdisney.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>香港迪士尼樂園門票</h2>
+                <p>2M+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 1,569</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/hkocean.jfif" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>香港海洋公園門票</h2>
+                <p>100M+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 959</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/carrr.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>【限時優惠】昂坪360纜車門票</h2>
+                <p>100K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 519</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/hkoceanpark.jfif" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【限時早鳥優惠】香港海洋公園水上樂園門票</h2>
+                <p>6K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 1,154</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>泰國</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/thai.jfif" alt="">
+            <div class="trip_area_txt">
+                <h2>泰國</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/manking.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【優惠】曼谷王權Mahanakhon SkyWalk</h2>
+                <p>50K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 415</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/templee.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>芭達雅真理寺</h2>
+                <p>70K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 315</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/thaicoffee.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>泰國星巴克電子卡</h2>
+                <p>7K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 763</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/milan.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>斯米蘭群島快艇一日遊</h2>
+                <p>7K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 1,244</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>美國</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/am.jpg" alt="">
+            <div class="trip_area_txt">
+                <h2>美國</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/lasvis.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>拉斯維加斯豪客摩天輪High Roller門票</h2>
+                <p>7K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 620</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/amdisney.JPG" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>加州迪士尼樂園&迪士尼加州冒險樂園門票</h2>
+                <p>50K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 2,866</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/ballmovie.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>好萊塢環球影城單日票&二日門票</h2>
+                <p>100K+人參加</p>
+                <h3>★4.9</h3>
+                <h2>NT$ 2,917</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/sandia.jfif" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>聖地牙哥海洋世界門票</h2>
+                <p>10K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 1,808</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>韓國</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/korea.jpg" alt="">
+            <div class="trip_area_txt">
+                <h2>韓國</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/koreafish.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>釜山水族館Sea Life免排隊門票</h2>
+                <p>40K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 422</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/south.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【優惠】南怡島門票(包美食+活動)</h2>
+                <p>20K+人參加</p>
+                <h3>★4.7</h3>
+                <h2>NT$ 117</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/tian.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>首爾樂天世界主題樂園一日門票</h2>
+                <p>400K+人參加</p>
+                <h3>★4.5</h3>
+                <h2>NT$ 826</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/southta.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>N首爾塔(南山塔)門票</h2>
+                <p>400K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 141</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="phone_trip_area_title">
+        <h2>中國</h2>
+    </div>
+
+    <div class="trip_section">
+        <div class="trip_area">
+            <img src="pic/china.jpg" alt="">
+            <div class="trip_area_txt">
+                <h2>中國</h2>
+                <p>探索 ></p>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/funm.jfif" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【限時優惠】深圳歡樂谷門票</h2>
+                <p>20K+人參加</p>
+                <h3>★4.9</h3>
+                <h2>NT$ 261</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/chinadisney.webp" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【限時優惠】上海迪士尼樂園門票</h2>
+                <p>300K+人參加</p>
+                <h3>★4.8</h3>
+                <h2>NT$ 798</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/kong.jfif" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+             <div class="trip_area_item_txt">
+                <h2>【限時促銷】廣州融創雪世界門票</h2>
+                <p>30K+人參加</p>
+                <h3>★4.6</h3>
+                <h2>NT$ 1,124</h2>
+            </div>
+        </div>
+        <div class="trip_area_item">
+            <div class="trip_area_item_pic">
+                <img src="pic/pigocean.jpg" alt="">
+                <div class="discount_bar">
+                    <div class="discount">
+                        <p>7% OFF</p>
+                    </div>
+                    <div class="hot_sale">
+                        <p>熱賣中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="trip_area_item_txt">
+                <h2>【限時優惠】珠海長隆海洋王國門票</h2>
+                <p>100K+人參加</p>
+                <h3>★4.5</h3>
+                <h2>NT$ 420</h2>
+            </div>
+        </div>
+        <div class="trip_section_nextbtn">
+            <a href="#">
+                <img src="pic/next.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="footer_color">
+        <div class="footer">
+            <div class="footer_bar">
+                <div class="footer_logo">
+                    <img src="pic/sometrip.png" alt="">
+                </div>
+                <h2>立即收到最新資訊</h2>
+                <div class="subscribe">
+                    <input type="text" placeholder="輸入電子信箱" style ="font-size:16px;height:30px;width:200px; border: 1px solid black;">
+                </div>
+                <button>訂閱</button>
+            </div>
+            <div class="about">
+                <div class="know_sometrip">
+                    <p>認識SOMETRIP</p>
+                    <a href="#">關於SOMETRIP</a>
+                    <a href="#">SOMETRIP旅遊攻略</a>
+                    <a href="#">加入SOMETRIP</a>
+                </div>
+                <div class="together_sometrip">
+                    <p>攜手SOMETRIP</p>
+                    <a href="#">供應商註冊</a>
+                    <a href="#">供應商登入</a>
+                    <a href="#">聯合行銷</a>
+                    <a href="#">名人合作</a>
+                    <a href="#">同業交易</a>
+                    <a href="#">數位解決方案</a>
+                    <a href="#">分銷&行銷提案</a>
+                </div>
+                <div class="use_sometrip">
+                    <p>使用條款</p>
+                    <a href="#">使用條款</a>
+                    <a href="#">隱私政策</a>
+                    <a href="#">Cookie政策</a>
+                    <a href="#">技術問題懸賞方案</a>
+                </div>
+                <div class="contact_us">
+                    <p>聯絡我們</p>
+                    <div class="app">
+                        <div class="app_pic">
+                            <img src="pic/facebook.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/instagram.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/twitter.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/wechat.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><button type="button" id="BackTop" class="toTop-arrow"></button>
+    <script>
+    $(function(){
+        $('#BackTop').click(function(){ 
+            $('html,body').animate({scrollTop:0}, 333);
+        });
+        $(window).scroll(function() {
+            if ( $(this).scrollTop() > 300 ){
+                $('#BackTop').fadeIn(222);
+            } else {
+                $('#BackTop').stop().fadeOut(222);
+            }
+        }).scroll();
+    });
+    </script>
+
+</body>
+</html>

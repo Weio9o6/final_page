@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        html {
+            background-color: rgb(238, 238, 238);
+        }
+        .second_bar a{
+            display: block;
+            padding: 10px 20px;
+        }
+        #menu-control{
+            display: none;
+        }
+        #menu-control:checked ~ .second_bar{
+            left: 0;
+        }
+        .second_bar{
+            position: fixed;
+            background-color: rgb(189, 189, 189);
+            top: 8%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 1s;
+            z-index: 2;
+        }
+        .second_bar a{
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .title_bar {
+            width: 100%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            background-color: #aaa;
+            position: fixed;
+            z-index: 1;
+        }
+
+        .title_bar .logo {
+            margin: 5px 10px;
+            width: 15%;
+            height: 50px;
+        }
+
+        .title_bar .logo img {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+
+        .title_bar .search {
+            flex-grow: 1;
+        }
+
+        .hb {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            background-color: orange;
+            margin-right: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .hb span {
+            width: 32px;
+            height: 2px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        .title_bar .login a {
+            display: none;
+        }
+        .slider_container {
+            margin: 30px auto;
+            width: 400px;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+            /* border: 10px solid;
+            border-top-color: #856036;
+            border-left-color: #5d4426;
+            border-bottom-color: #856036;
+            border-right-color: #5d4426;
+            background-color: #f5f5f5; */
+        }
+        .slider_container:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            width: 100%;
+            height: 100%;
+            background-image: url(pic/view23.jpeg);
+            animation: bk 25s linear;
+        }
+        .slider_container div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            left: 100%;
+            width: 100%;
+            -webkit-animation: round 25s linear infinite;
+            animation: round 25s linear infinite;
+        }
+        .slider_container div img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes round {
+            4% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: 0;
+                /* 0 - 1秒 滑入*/
+            }
+            20% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: 0;
+                /* 1- 5秒靜止*/
+            }
+            24% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+                left: -100%;
+                /* 5-6秒滑出*/
+            }
+            26% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+                left: -100%;
+                /* 6-6.5秒變透明*/
+            } 
+            28% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+                left: 100%;
+                /* 6.5-7秒回到起始位置*/
+            } 
+        }
+        @keyframes bk {
+            0% {
+                left: 0;
+                /* 初始位置*/
+            }
+            4% {
+                left: -100%;
+                /* 0 - 1秒 滑出*/
+            }   
+        }
+
+        @keyframes bk {
+            0% {
+                left: 0;
+                /* 初始位置*/
+            }
+            4% {
+                left: -100%;
+                /* 0 - 1秒 滑出*/
+            }  
+        }
+        .slider_container div:nth-child(5) {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+        .slider_container div:nth-child(4) {
+            -webkit-animation-delay: 5s;
+            animation-delay: 5s;
+        }
+        .slider_container div:nth-child(3) {
+            -webkit-animation-delay: 10s;
+            animation-delay: 10s;
+        }
+        .slider_container div:nth-child(2) {
+            -webkit-animation-delay: 15s;
+            animation-delay: 15s;
+        }
+        .slider_container div:nth-child(1) {
+            -webkit-animation-delay: 20s;
+            animation-delay: 20s;
+        }
+        .rwd_slider_container_wrapper {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: -99;
+        }
+        .rwd_slider_container {
+            position: relative;
+            display: block;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            padding-bottom: 70%;
+            box-sizing: border-box;
+            /* background-color: red; */
+            z-index: -99;
+        }
+        .rwd_slider_container .slider_container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%;
+            margin: 0;
+            box-sizing: border-box;
+            z-index: -1;
+        }
+
+        .discover_txt {
+            width: 80%;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 0.1em 0.1em 0.2em black;
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 18%;
+        }
+
+        .discover {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            height: 40px;
+            margin: auto;
+            padding: 5px;
+            background-color: white;
+            border: 1px solid white;
+            box-shadow: 3px 3px 7px rgb(139, 139, 139);
+            border-radius: 5px;
+            align-items: center;
+            position: absolute;
+            margin: 0;
+            top: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .banner input {
+            font-size: 18px;
+            height: 50px;
+            width: 90%;
+            border: 1px white;
+        }
+
+        .discover_search_btn {
+            width: 70px;
+            height: 20px;
+            background-color: orange;
+            border: 1px solid orange;
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .discover_search_btn a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+        .bread{
+            width: 98%;
+            margin: auto;
+            margin-bottom: 30px;
+            margin-top: -10%;
+        }
+        .bread a{
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px;
+            color: cornflowerblue;
+            
+        }.for_phone{
+            width: 100%;
+        }
+        .for_phone .phone_license{
+            width: 95%;
+            margin: auto;
+        }
+        .for_phone .phone_license_pic{
+            width: 95%;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .for_phone .phone_license_pic img{
+            width: 100%;
+        }
+        .for_phone .phone_cautions{
+            width: 85%;
+            margin: auto;
+            line-height: 1.3em;
+            margin-bottom: 50px;
+        }
+        .for_phone .phone_cautions h2{
+            font-size: 20px;
+            margin-top: 15px;
+            margin-bottom: 6px;
+        }
+        .phone_license .phone_license_title{
+            width: 95%;
+            margin: auto;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .phone_votage{
+            width: 95%;
+            margin: auto;
+        }
+        .phone_votage_title{
+            width: 95%;
+            font-size: 30px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .phone_votage_pic{
+            width: 95%;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .phone_votage_pic img{
+            width: 100%;
+        }
+        .phone_votage .votage_country{
+            width: 90%;
+            margin: auto;
+        }
+        .phone_votage .votage_country select{
+            width: 20%;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .transform_info{
+            width: 95%;
+            margin: auto;
+        }
+        .transform_info table{
+            width: 90%;
+            margin: auto;
+            font-size: 20px;
+            margin-bottom: 70px;
+        }
+        .transform_info table th{
+            text-align: start;
+        }
+        .transform_info table td:nth-child(4){
+            color: rgb(1, 1, 163);
+        }
+        .phone_tripapps{
+            width: 95%;
+            margin: auto;
+        }
+        .phone_tripapps_title{
+            width: 90%;
+            font-size: 30px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .phone_tripapps .phone_app{
+            width: 95%;
+        }
+        .phone_tripapps .phone_app .phone_app_pic{
+            width: 50%;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .phone_tripapps .phone_app .phone_app_pic img{
+            width: 100%;
+        }
+        .phone_tripapps .phone_app .phone_app_info{
+            width: 50%;
+            margin: auto;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .footer_color{
+            width: 100%;
+            background-color: rgb(117, 117, 117);
+        }
+        .footer_bar{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+        }
+        .footer_bar .footer_logo{
+            width: 20%;
+            height: auto;
+            margin-right: auto;
+        }
+        .footer_bar .footer_logo img{
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+        .footer_bar h2{
+            margin-right: 5px;
+            color: white;
+        }
+        .footer .subscribe input{
+            font-size:16px;
+            height:30px;
+            width:200px; 
+            border: 1px solid black;
+        }
+        
+        .footer_bar button{
+            font-size: 16px;
+            width: 50px;
+            height: 35px;
+            background-color: orange;
+            color: white;
+        }
+        .about{
+            width: calc(100% - 20px);
+            margin: auto;
+            display: flex;
+            padding: 10px;
+        }
+        .know_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .together_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .use_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact_us{
+            width: 25%;
+        }
+        .footer .about p{
+            font-size: 16px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .footer .about a{
+            text-decoration: none;
+            font-size: 15px;
+            color:black;
+            padding: 5px;    
+        }
+        .app .app_pic{
+            width: 30px;
+            height: 30px;
+            margin: 10px;
+        }
+        .app .app_pic img{
+            width: 100%;
+            height: 100%;
+        }
+        .coverflow{
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: auto;
+        }
+        .coverflow img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin: auto;
+        }
+        .coverflow>a{
+            display: block;
+            position: absolute;
+            top:0;
+            left:0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        /*當圖片數量增加，影片長度需更改，變為5s*圖片數量*/
+            -webkit-animation: silder 15s linear infinite;
+            animation: silder 15s linear infinite;
+        }
+        .coverflow>a>img{
+            max-width: 100%;
+        }
+        /*動畫關鍵影格*/
+        @-webkit-keyframes silder {
+            3% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+            27% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+            30% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+            }
+        }
+        @keyframes silder {
+            3% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+            27% {
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+            30% {
+                opacity: 0;
+                filter: alpha(opacity=0);
+            }
+        }
+        /*每個圖片各延遲5秒*/
+        .coverflow>a:nth-child(3) {
+            -webkit-animation-delay: 10s;
+                    animation-delay: 10s;               
+        }
+        .coverflow>a:nth-child(2) {
+            -webkit-animation-delay: 5s;
+                    animation-delay: 5s;
+        }
+        .coverflow>a:nth-child(1) {
+            -webkit-animation-delay: 0s;
+                    animation-delay: 0s;    
+        }
+        /*滑入時停止播放*/
+        .coverflow:hover>a{
+            -webkit-animation-play-state: paused;
+                    animation-play-state: paused;
+        }
+        .toTop-arrow {
+            width: 3rem;
+            height: 3rem;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-radius: 33%;
+            opacity: 0.6;
+            background: #000;
+            cursor: pointer;
+            position:fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+        }
+        .toTop-arrow::before, .toTop-arrow::after {
+            width: 25px;
+            height: 6px;
+            border-radius: 3px;
+            background: #f90;
+            position: absolute;
+            content: "";
+        }
+        .toTop-arrow::before {
+            transform: rotate(-45deg) translate(0, -50%);
+            left: 0.42rem;
+        }
+        .toTop-arrow::after {
+            transform: rotate(45deg) translate(0, -50%);
+            right: 0.42rem;
+        }
+        .toTop-arrow:focus {outline: none;}
+        @media screen and (min-width:768px) {
+            .hb {
+                display: none;
+            }
+
+            .title_bar .login a {
+                display: block;
+                text-decoration: none;
+                font-size: 16px;
+                border: 2px;
+                border-radius: 15px;
+                background-color: rgb(248, 141, 0);
+                color: white;
+                padding: 10px;
+                margin-right: 15px;
+            }
+
+            .title_bar .logo{
+                margin: 5px 20px;
+                width: 140px;
+                height: 50px;
+            }
+
+            .title_bar .login a:hover {
+                background-color: red;
+            }
+
+            .second_bar {
+                display: flex;
+                margin: 0 30px;
+                /* background-color: rgb(218, 139, 139); */
+                background-color: rgb(180, 179, 179);
+                position: fixed;
+                margin: 0;
+                top: 60px;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                height: 6%;
+
+            }
+
+            .second_bar a {
+                text-decoration: none;
+                padding: 10px 0px;
+                margin-left: 30px;
+                font-size: 16px;
+                color: black;
+            }
+
+            .second_bar img {
+                width: 15px;
+                height: 15px;
+                vertical-align: top;
+            }
+
+            .discover_txt {
+                width: 80%;
+                margin: auto;
+                font-size: 50px;
+                font-weight: bold;
+                text-shadow: 0.1em 0.1em 0.2em black;
+                color: white;
+                position: absolute;
+                margin: 0;
+                top: 35%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .discover {
+                display: flex;
+                width: 80%;
+                height: 48px;
+                margin: auto;
+                padding: 5px;
+                background-color: white;
+                border: 1px solid white;
+                box-shadow: 3px 3px 7px rgb(139, 139, 139);
+                border-radius: 5px;
+                align-items: center;
+                position: absolute;
+                margin: 0;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .banner input {
+                font-size: 20px;
+                height: 50px;
+                width: 300px;
+                border: 1px white
+            }
+
+            .discover_search_btn {
+                width: 70px;
+                height: 30px;
+                background-color: orange;
+                border: 1px solid orange;
+                border-radius: 5px;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .discover_search_btn a {
+                text-decoration: none;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+                display: block;
+                margin-top: 6px;
+            }
+            .bread{
+                width: 90%;
+                margin: auto;
+                padding: 20px;
+                margin-bottom: 30px;
+                margin-top: -13%;
+            }
+            .for_phone .phone_license_pic{
+                width: 75%;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+            .for_phone .phone_cautions{
+                width: 75%;
+                
+            }
+            .for_phone .phone_cautions h2{
+                font-size: 25px;
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            .for_phone .phone_cautions li{
+                font-size: 18px;
+                line-height: 1.5em;
+            }
+            .phone_votage_pic{
+                width: 75%;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+            .phone_votage .votage_country select{
+                font-size: 25px;
+            }
+            .phone_votage table{
+                font-size: 22px;
+            }
+            .phone_tripapps{
+                display: flex;
+            }
+            .footer_color{
+                width: 100%;
+                background-color: rgb(117, 117, 117);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .footer_bar{
+                width: 100%;
+                margin: auto;
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            .footer_bar .footer_logo{
+                width: 140px;
+                height: 50px;
+                margin-right: auto;
+            }
+            .footer_bar .footer_logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .footer_bar h2{
+                margin-right: 5px;
+                color: white;
+            }
+            .footer_bar button{
+                font-size: 16px;
+                width: 50px;
+                height: 35px;
+                background-color: orange;
+                color: white;
+                
+            }
+            .footer .subscribe input{
+                font-size:16px;
+                height:30px;
+                width:200px; 
+                border: 1px solid black;
+            }
+            .about{
+                width: 90%;
+                margin: auto;
+                display: flex;
+            }
+            .know_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .together_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .use_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .contact_us{
+                width: 25%;
+            }
+            .footer .about p{
+                font-size: 16px;
+                color: white;
+                margin-bottom: 10px;
+            }
+            .footer .about a{
+                text-decoration: none;
+                font-size: 15px;
+                color:black;
+                padding: 5px;    
+            }
+            .app{
+                display: flex;
+            }
+            .app .app_pic{
+                width: 30px;
+                height: 30px;
+                margin: 10px;
+            }
+            .app .app_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            .coverflow{
+                width: 400px;
+                height: 400px;
+            }
+            
+        }
+        @media screen and (min-width:1200px) {
+            .discover_txt{
+                top: 45%;
+            }
+            .discover{
+                top: 65%;
+            }
+            .for_phone .phone_license_pic{
+                width: 65%;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+            .for_phone .phone_cautions{
+                width: 65%;
+            }
+            .phone_votage_pic{
+                width: 65%;
+                margin: auto;
+                margin-bottom: 20px;
+            }
+            .phone_license .phone_license_title{
+                width: 90%;
+                margin: auto;
+                font-size: 30px;
+                margin-bottom: 20px;
+            }
+            .footer_color{
+                width: 100%;
+                background-color: rgb(117, 117, 117);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .footer_bar{
+                width: 100%;
+                margin: auto;
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            .footer_bar .footer_logo{
+                width: 140px;
+                height: 50px;
+                margin-right: auto;
+            }
+            .footer_bar .footer_logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .footer_bar h2{
+                margin-right: 5px;
+                color: white;
+            }
+            .footer_bar button{
+                font-size: 16px;
+                width: 50px;
+                height: 35px;
+                background-color: orange;
+                color: white;
+                
+            }
+            .footer .subscribe input{
+                font-size:16px;
+                height:30px;
+                width:200px; 
+                border: 1px solid black;
+            }
+            .about{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+            }
+            .know_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .together_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .use_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .contact_us{
+                width: 280px;
+            }
+            .footer .about p{
+                font-size: 16px;
+                color: white;
+                margin-bottom: 10px;
+            }
+            .footer .about a{
+                text-decoration: none;
+                font-size: 15px;
+                color:black;
+                padding: 5px;    
+            }
+            .app{
+                display: flex;
+            }
+            .app .app_pic{
+                width: 30px;
+                height: 30px;
+                margin: 10px;
+            }
+            .app .app_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            .coverflow{
+                width: 500px;
+                height: 500px;
+            }
+
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="menu-control">
+
+    <div class="title_bar">
+        <div class="logo">
+            <a href="RWD-homepage.html">
+                <img src="pic/sometrip.png" alt="">
+            </a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="探索目的地/活動" style="font-size:16px;height:30px;width:200px;border-radius: 15px; border: 1px solid white;">
+        </div>
+        <div class="login">
+            <a href="#">登入</a>
+        </div>
+        <label for="menu-control" class="hb">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+    <nav class="second_bar">
+        <a href="#" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">探索目的地</a>
+        <a href="RWD-howtoplay.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">特色體驗</a>
+        <a href="RWD-food.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">美食品嘗</a>
+        <a href="RWD-wificard.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">網路卡</a>
+        <a href="RWD-mustknow.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">出國須知</a>
+    </nav>
+    <div class="banner">
+        <div class="rwd_slider_container_wrapper">
+            <div class="rwd_slider_container">
+                <div class="slider_container" >
+                    <div>
+                        <img src="pic/view17.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view22.jpeg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view19.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view21.jpeg" alt="">
+                    </div>
+                    <div>
+                        <img src="pic/view23.jpeg" alt="">
+                    </div>
+                </div><!-- end of .pure_slider_container -->
+            </div><!-- end of .embed-responsive -->
+        </div><!-- end of .embed-responsive-box -->
+        <div class="discover_txt">出國須知</div>
+        <div class="discover">
+            <div class="discover_search">
+                <input type="text" placeholder="想知道什麼?">
+            </div>
+            <div class="discover_search_btn">
+                <a href="#">搜尋</a>
+            </div>
+        </div>
+    </div>
+    <div class="bread">
+        <a href="RWD-homepage.html">首頁 ></a>
+        <a href="RWD-mustknow.html" style="color: gray;">出國須知</a>
+    </div>
+    <div class="for_phone">
+        <div class="phone_license">
+            <div class="phone_license_title">
+            <h2>國際駕照</h2>
+            </div>
+            <div id="cover" class="coverflow">
+                <a href='#'><img src='pic/lic01.jpg' alt=' ' ></a>
+                <a href='#'><img src='pic/lic04.jpeg' alt=' ' ></a>
+                <a href='#'><img src='pic/lic03.jpg' alt=' ' ></a>
+            </div>
+            <div class="phone_cautions">
+                <h2>申請國際駕照流程</h2>
+                <ol>
+                    <li>帶著需帶身份證明文件正本、照片、駕照正本、護照影本，以及申請費用</li>
+                    <li>到監理站的「駕照綜合窗口」辦理國際駕照</li>
+                    <li>填寫申請國際駕照表格</li>
+                    <li>拿到國際駕照的本子後，裡面會列出各國語言寫的條例規範，請打開最後一頁確定所申請的駕照（A格子蓋的是機車駕照，B格子蓋的是汽車駕照）</li>
+                    <li>若無問題，在照片底下的地方簽名就可以了</li>
+                    <li>申請時間：約一小時</li>
+                </ol>
+                <h2>申請國際駕照注意事項</h2>
+                <ul>
+                    <li>效期：國際駕照有效期為三年，若過期則須重新辦理</li>
+                    <li>國內駕照被吊銷或註銷者，就不能申請國際駕照</li>
+                    <li>如果有違規罰款案件，應該先到監理所或裁決所處理結案</li>
+                    <li>若「國內駕照已逾有效日期」、「職業駕照審驗日期已逾期或將屆滿」或「國內普通駕照有效期限雖未逾期，但不足3年者」，請先行辦理換照或完成審驗後，再申請國際駕照</li>
+                    <li>國內駕照為「輕型機車」或「普通輕型機車」者，無法申請國際駕照</li>
+                    <li>有些國家不承認台灣的駕照喔，請參考主要國家駕照互惠情形一覽表的資料內容</li>
+                </ul>
+            </div>
+        </div>
+        <div class="phone_votage">
+            <div class="phone_votage_title">
+                <h2>電壓轉換</h2>
+            </div>
+            <div class="phone_votage_pic">
+                <img src="pic/votage.png" alt="">
+            </div>
+            <div class="votage_country">
+                <select name="" id="">
+                    <option value="">亞太地區</option>
+                    <option value="">中東地區</option>
+                    <option value="">北美地區</option>
+                    <option value="">中南美地區</option>
+                    <option value="">歐洲地區</option>
+                    <option value="">非洲地區</option>
+                </select>
+            </div>
+            <div class="transform_info">
+                <table border="1px solid black">
+                    <tr>
+                        <th>國名</th>
+                        <th>電壓</th>
+                        <th>頻率</th>
+                        <th>插頭型式</th>
+                    </tr>
+                    <tr>
+                        <td>日本</td>
+                        <td>100V</td>
+                        <td>50,60</td>
+                        <td>A&B</td>
+                    </tr>
+                    <tr>
+                        <td>中國</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>D&J</td>
+                    </tr>
+                    <tr>
+                        <td>韓國</td>
+                        <td>220V</td>
+                        <td>50,60</td>
+                        <td>E&G</td>
+                    </tr>
+                    <tr>
+                        <td>香港</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>澳門</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>澳大利亞</td>
+                        <td>240V</td>
+                        <td>50</td>
+                        <td>C&D</td>
+                    </tr>
+                    <tr>
+                        <td>紐西蘭</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>C&D</td>
+                    </tr>
+                    <tr>
+                        <td>越南</td>
+                        <td>120/220V</td>
+                        <td>50</td>
+                        <td>A,B,E&G</td>
+                    </tr>
+                    <tr>
+                        <td>泰國</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>A,B</td>
+                    </tr>
+                    <tr>
+                        <td>馬來西亞</td>
+                        <td>230V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>新加坡</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>新加坡</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>新加坡</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>菲律賓</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>A&B</td>
+                    </tr>
+                    <tr>
+                        <td>印尼</td>
+                        <td>220V</td>
+                        <td>50</td>
+                        <td>E&G</td>
+                    </tr>
+                    <tr>
+                        <td>印度</td>
+                        <td>230V</td>
+                        <td>50</td>
+                        <td>K&L</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="phone_tripapps_title">
+            <h2>旅行app</h2>
+        </div>
+        <div class="phone_tripapps">
+            <div class="phone_app">
+                <div class="phone_app_pic">
+                    <img src="pic/tripapp1.jfif" alt="">
+                </div>
+                <div class="phone_app_info">
+                    <h2>愛食記</h2>
+                    <p>老饕必備 人氣餐廳盡收其中</p>
+                </div>
+            </div>
+            <div class="phone_app">
+                <div class="phone_app_pic">
+                    <img src="pic/tripapp3.jpeg" alt="">
+                </div>
+                <div class="phone_app_info">
+                    <h2>WishTrip</h2>
+                    <p>自動彙整旅程中的精彩回憶</p>
+                </div>
+            </div>
+            <div class="phone_app">
+                <div class="phone_app_pic">
+                    <img src="pic/tripapp2.jfif" alt="">
+                </div>
+                <div class="phone_app_info">
+                    <h2>極簡匯率</h2>
+                    <p>操作直覺且人性化的幣值轉換</p>
+                </div>
+            </div>
+            <div class="phone_app">
+                <div class="phone_app_pic">
+                    <img src="pic/tripapp4.jfif" alt="">
+                </div>
+                <div class="phone_app_info">
+                    <h2>MAPS.ME</h2>
+                    <p>離線導航 沒訊號也免擔心</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer_color">
+        <div class="footer">
+            <div class="footer_bar">
+                <div class="footer_logo">
+                    <img src="pic/sometrip.png" alt="">
+                </div>
+                <h2>立即收到最新資訊</h2>
+                <div class="subscribe">
+                    <input type="text" placeholder="輸入電子信箱" style ="font-size:16px;height:30px;width:200px; border: 1px solid black;">
+                </div>
+                <button>訂閱</button>
+            </div>
+            <div class="about">
+                <div class="know_sometrip">
+                    <p>認識SOMETRIP</p>
+                    <a href="#">關於SOMETRIP</a>
+                    <a href="#">SOMETRIP旅遊攻略</a>
+                    <a href="#">加入SOMETRIP</a>
+                </div>
+                <div class="together_sometrip">
+                    <p>攜手SOMETRIP</p>
+                    <a href="#">供應商註冊</a>
+                    <a href="#">供應商登入</a>
+                    <a href="#">聯合行銷</a>
+                    <a href="#">名人合作</a>
+                    <a href="#">同業交易</a>
+                    <a href="#">數位解決方案</a>
+                    <a href="#">分銷&行銷提案</a>
+                </div>
+                <div class="use_sometrip">
+                    <p>使用條款</p>
+                    <a href="#">使用條款</a>
+                    <a href="#">隱私政策</a>
+                    <a href="#">Cookie政策</a>
+                    <a href="#">技術問題懸賞方案</a>
+                </div>
+                <div class="contact_us">
+                    <p>聯絡我們</p>
+                    <div class="app">
+                        <div class="app_pic">
+                            <img src="pic/facebook.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/instagram.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/twitter.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/wechat.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" id="BackTop" class="toTop-arrow"></button>
+<script>
+$(function(){
+	$('#BackTop').click(function(){ 
+		$('html,body').animate({scrollTop:0}, 333);
+	});
+	$(window).scroll(function() {
+		if ( $(this).scrollTop() > 300 ){
+			$('#BackTop').fadeIn(222);
+		} else {
+			$('#BackTop').stop().fadeOut(222);
+		}
+	}).scroll();
+});
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        html{
+            background-color: rgb(238, 238, 238);
+        }
+        .second_bar a{
+            display: block;
+            padding: 10px 20px;
+        }
+        #menu-control{
+            display: none;
+        }
+        #menu-control:checked ~ .second_bar{
+            left: 0;
+        }
+        .second_bar{
+            position: fixed;
+            background-color: rgb(189, 189, 189);
+            top: 8%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 1s;
+            z-index: 2;
+        }
+        .second_bar a{
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .title_bar {
+            width: 100%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            background-color: #aaa;
+            position: fixed;
+            z-index: 1;
+        }
+
+        .title_bar .logo {
+            margin: 5px 10px;
+            width: 15%;
+            height: 50px;
+        }
+
+        .title_bar .logo img {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+
+        .title_bar .search {
+            flex-grow: 1;
+        }
+
+        .hb {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            background-color: orange;
+            margin-right: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .hb span {
+            width: 32px;
+            height: 2px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        .title_bar .login a {
+            display: none;
+        }
+        .bread{
+            width: 95%;
+            margin: auto;
+            margin-bottom: 45px;
+            padding-top: 70px;
+        }
+        .bread a{
+            text-decoration: none;
+            font-size: 15px;
+            padding: 10px;
+            color: rgb(85, 82, 255);
+                
+        }
+        .food_top_title{
+            width: 80%;
+            margin: auto;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+        .food_top_title h1{
+            font-size: 35px;
+            /* margin-bottom: 40px; */
+        }
+        .raiders{
+            width: 100%;
+            margin: auto;
+        }
+        .raiders  .raiders_title{
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .raiders  .raiders_title h2{
+            font-size: 25px;
+        }
+        .play{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .item{
+            border: 1px solid rgb(134, 134, 134);
+            border-radius: 3px;
+            margin: 15px;
+            width: calc(50% - 32px);
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        .item_pic{
+            width: 100%;
+            height: 150px;
+            
+        }
+        .item_pic img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .item_txt{
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            background-color: white;
+        }
+        .item_txt h2{
+            margin-top: 13px;
+            margin-bottom: 5px;
+            line-height: 1.2em;
+        }
+        .hot_spot{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        .hot_spot_item{
+            width: calc(33.333333% - 20px);
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .hot_spot_item:hover{
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);  
+            transform: translate3d(0,-5px,0);
+            transition-duration: 0.3s;  
+        }
+        .hot_spot_pic{
+            width: 100%;
+            height: 160px;
+            border: 1px solid rgb(134, 134, 134);
+            border-radius: 3px;
+            margin-bottom: -35px;
+            padding-left: -10px;
+        }
+        .hot_spot_pic img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hot_spot_txt{
+            font-size: 25px;
+            color: white;
+            background-color: rgb(0,0,0,.5);
+            font-weight: bold;
+            padding-left: 10px;
+        }
+        .want_to_eat_title{
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        .want_to_eat{
+            display: none;
+        }
+        /* 想吃什麼-以下 */
+        .itemPanel1{
+            position:relative;
+            width: 400px;
+            height:380px;
+            margin: auto;
+            background-color: #bfbfef;
+            overflow:hidden;
+            
+        }
+        .wrap1{
+            position:absolute;
+            width:2500px;
+            transition:left 1s;
+            background-color:rgb(238, 238, 238);
+        }
+        .wrap1 .food_section1{
+            width: 400px;
+            height: 370px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .food_section1{
+            margin: 5px;
+            width:390px;
+            height:310px;
+            text-align: center;
+            float:left;
+        }
+        .food_section1 .item1{
+            width: 178px;
+            height: 150px;
+            margin: 10px;
+        }
+        .food_section1 .item1 img{
+            width: 120px;
+            height: 120px;
+            border: 3px solid white;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            margin: auto;
+        }
+        .item1>img{
+            width: 100%;
+        }
+        #leftRightPanel1{
+            width: 400px;
+            margin: auto;
+            padding-top: 5px;
+            text-align: end;
+            margin-bottom: 30px;
+        }
+        #btnLeft1, #btnRight1{
+            color:deeppink;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        #btnLeft1[disabled], #btnRight1[disabled]{
+            color:pink;
+            font-size:20px;
+            font-weight:bold;
+        }
+        /* 想吃什麼-以上 */
+
+        .itemPanel2{
+            display: none;
+        }
+        #leftRightPanel2{
+            display: none;
+        }
+        .where_to_eat_title{
+            width: 95%;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+        .where_to_eat_title h1{
+            font-size: 25px;
+        }
+        .where_to_eat{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        .where_to_eat .section{
+            width: calc(50% - 48px);
+            margin: 15px;
+            display: flex;
+            align-items: center;
+            border: 1px solid white;
+            border-radius: 3px;
+            padding: 8px;
+            background-color: white;
+        }
+        .where_to_eat .section:hover{
+            box-shadow: 5px 5px 5px rgba(0,0,0,0.2);  
+            transform: translate3d(0,-5px,0);
+            transition-duration: 0.3s;
+        }
+        .where_to_eat .section img{
+            width:18px;
+            height: 18px;
+            margin-right: 5px;
+        }
+        .where_to_eat .section h2{
+            font-size: 20px;
+        }
+        .all_restaurant_title{
+            width: 100%;
+            margin: auto;
+            margin-left: 10px;
+            margin-bottom: 30px;
+        }
+        .all_restaurant_title h1{
+            width: 100%;
+            font-size: 25px;
+        }
+        .choose_res_for_phone select{
+            font-size: 18px;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            width: 200px;
+            height: 50px;
+        }
+        .all_restaurant .choose_food{
+            display: none;
+        }
+        .restaurant_detail{
+            width: 100%;
+        }
+        .restaurant_detail .find_restaurant{
+            width: calc(100% - 32px);
+            height: 50px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            margin: auto;
+            margin-bottom: 15px;
+        }
+        .restaurant_detail .find_restaurant p{
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        .restaurant_detail_item{
+            width: calc(95% - 22px);
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 3px;
+            box-shadow: 0 0 30px rgba(0,0,0,.1);
+            margin: auto;
+            margin-bottom: 15px;
+        }
+        .restaurant_detail_item:hover{
+            box-shadow: 5px 5px 5px rgba(0,0,0,0.2);  
+            transform: translate3d(0,-5px,0);
+            transition-duration: 0.3s;  
+            /* transform: scale(1.5,1.5); */
+            /* transform: skew(30deg,0); */
+        }
+        .restaurant_detail_item_pic{
+            width: calc(50% - 11px);
+            margin-right: 5px;
+        }
+        .restaurant_detail_item_pic img{
+            width: 100%;
+            height: 200px;
+        }
+        /* .restaurant_detail_item_pic img.radius{
+            border-radius: 5px;
+        } */
+        .restaurant_detail_item_txt{
+            width: calc(50% - 11px);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            background-color: white;
+            padding: 15px;
+        }
+        .restaurant_detail_item_txt .words h2{
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+        .restaurant_detail_item_txt .words p{
+            font-size: 15px;
+            color: grey;
+            margin-bottom: 5px;
+        }
+        .restaurant_detail_item_txt .hot_points{
+            display: flex;
+            flex-grow: 1;
+        }
+        .restaurant_detail_item_txt .hot_points h2{
+            font-size: 16px;
+            color: orange;
+            margin-right: 8px;
+        }
+        .restaurant_detail_item_txt .hot_points p{
+            font-size: 15px;
+            color: grey;
+            padding-top: 2px;
+        }
+        .restaurant_price{
+            display: flex;
+            align-items: center;
+            
+        }
+        .restaurant_price .discount h2{
+            width: 40px;
+            font-size: 18px;
+            background-color: rgb(255, 101, 29);
+            color: white;
+            padding: 3px;
+            border: 1px solid rgb(255, 101, 29);
+            border-radius: 2px;
+            margin-right: 3px;
+        }
+        .restaurant_price .voucher p{
+            font-size: 16px;
+            color: grey;
+            margin-right: 3px;
+        }
+        .restaurant_price .price h2{
+            font-size: 20px;
+        }
+        .for_pages{
+            width: 90%;
+            margin: auto;
+            margin-bottom: 50px;
+        }
+        .pages{
+            display: flex;
+            width: 450px;
+            margin-left: auto;
+            
+        }
+        .pages a{
+            padding: 3px 10px;
+            text-decoration: none;
+            font-size: 23px;
+            color: black;
+            background-color:white;
+            margin: 8px;
+            border: 1px black solid;
+            margin-bottom: 20px;
+            
+        }
+        .pages a img{
+            width: 12px;
+            height: 13px;
+        }
+        .footer_color{
+            width: 100%;
+            background-color: rgb(117, 117, 117);
+        }
+        .footer_bar{
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+        }
+        .footer_bar .footer_logo{
+            width: 20%;
+            height: auto;
+            margin-right: auto;
+        }
+        .footer_bar .footer_logo img{
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+        }
+        .footer_bar h2{
+            margin-right: 5px;
+            color: white;
+        }
+        .footer .subscribe input{
+            font-size:16px;
+            height:30px;
+            width:200px; 
+            border: 1px solid black;
+        }
+        
+        .footer_bar button{
+            font-size: 16px;
+            width: 50px;
+            height: 35px;
+            background-color: orange;
+            color: white;
+        }
+        .about{
+            width: calc(100% - 20px);
+            margin: auto;
+            display: flex;
+            padding: 10px;
+        }
+        .know_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .together_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .use_sometrip{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact_us{
+            width: 25%;
+        }
+        .footer .about p{
+            font-size: 16px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .footer .about a{
+            text-decoration: none;
+            font-size: 15px;
+            color:black;
+            padding: 5px;    
+        }
+        .app .app_pic{
+            width: 30px;
+            height: 30px;
+            margin: 10px;
+        }
+        .app .app_pic img{
+            width: 100%;
+            height: 100%;
+        }
+        .toTop-arrow {
+            width: 3rem;
+            height: 3rem;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-radius: 33%;
+            opacity: 0.6;
+            background: #000;
+            cursor: pointer;
+            position:fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+        }
+        .toTop-arrow::before, .toTop-arrow::after {
+            width: 25px;
+            height: 6px;
+            border-radius: 3px;
+            background: #f90;
+            position: absolute;
+            content: "";
+        }
+        .toTop-arrow::before {
+            transform: rotate(-45deg) translate(0, -50%);
+            left: 0.42rem;
+        }
+        .toTop-arrow::after {
+            transform: rotate(45deg) translate(0, -50%);
+            right: 0.42rem;
+        }
+        .toTop-arrow:focus {outline: none;}
+    
+        @media screen and (min-width:768px) {
+            .hb {
+                display: none;
+            }
+
+            .title_bar .login a {
+                display: block;
+                text-decoration: none;
+                font-size: 16px;
+                border: 2px;
+                border-radius: 15px;
+                background-color: rgb(248, 141, 0);
+                color: white;
+                padding: 10px;
+                margin-right: 15px;
+            }
+
+            .title_bar .logo{
+                margin: 5px 20px;
+                width: 140px;
+                height: 50px;
+            }
+
+            .title_bar .login a:hover {
+                background-color: red;
+            }
+
+            .second_bar {
+                display: flex;
+                margin: 0 30px;
+                /* background-color: rgb(218, 139, 139); */
+                background-color: rgb(180, 179, 179);
+                position: fixed;
+                margin: 0;
+                top: 60px;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                height: 6%;
+
+            }
+
+            .second_bar a {
+                text-decoration: none;
+                padding: 10px 0px;
+                margin-left: 30px;
+                font-size: 16px;
+                color: black;
+            }
+
+            .second_bar img {
+                width: 15px;
+                height: 15px;
+                vertical-align: top;
+            }
+            .bread{
+                width: calc(100% - 20px);
+                margin: auto;
+                margin-bottom: 45px;
+                padding-top: 130px;
+            }
+            .bread a{
+                text-decoration: none;
+                font-size: 15px;
+                padding: 10px;
+                color: rgb(85, 82, 255);
+                
+            }
+            .food_top_title{
+                width: 100%;
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            .food_top_title h1{
+                font-size: 35px;
+                /* margin-bottom: 40px; */
+            }
+            .raiders{
+                width: 100%;
+                margin: auto;
+            }
+            .raiders  .raiders_title{
+                width: calc(100% - 20px);
+                margin-bottom: 20px;
+            }
+            .raiders  .raiders_title h1{
+                width: 100%;
+            }
+            .raiders  .raiders_title h2{
+                width: 100%;
+                font-size: 25px;
+            }
+            .play{
+                width: 100%;
+                margin: auto;
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 4px;
+            }
+            .item{
+                border: 1px solid rgb(134, 134, 134);
+                border-radius: 3px;
+                margin: 15px;
+                width: calc(25% - 32px);
+                height: 220px;
+                /* 彈性高度 */
+                display: flex;
+                flex-direction: column;
+            }
+            .item:hover{
+                box-shadow: 5px 5px 10px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .item_pic{
+                width: 100%;
+                height: 150px;
+                
+            }
+            .item_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            .item_txt{
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                background-color: white;
+            }
+            .item_txt h2{
+                margin-top: 13px;
+                margin-bottom: 5px;
+                line-height: 1.2em;
+            }
+            .itemPanel1{
+                display: none;
+            }
+            #leftRightPanel1{
+                display: none;
+            }
+            .itemPanel2{
+                display: block;
+            }
+            #leftRightPanel2{
+                display: block;
+            }
+
+            /* 想吃什麼-以下 */
+            .itemPanel2{
+                position:relative;
+                width: 740px;
+                height:380px;
+                margin: auto;
+                background-color: rgb(238, 238, 238);
+                overflow:hidden;
+            }
+            .wrap2{
+                position:absolute;
+                top:5px;
+                width: 2220px;
+                transition:left 1s;
+            }
+            .wrap2 .food_section2{
+                width: 740px;
+                display: flex;
+                flex-wrap: wrap;
+                margin: 5px;
+                width:740px;
+                height:380px;
+                text-align: center;
+                float:left;
+            }
+            .wrap2 .food_section2 .item2{
+                width: 175px;
+                margin: 5px;
+            }
+            .food_section2 .item2 img{
+                width: 120px;
+                height: 120px;
+                border: 3px solid white;
+                border-radius: 50%;
+                margin-bottom: 10px;
+                object-fit: cover;
+            }
+            .item2>img{
+                width: 100%;
+            }
+            #leftRightPanel2{
+                width: 740px;
+                margin: auto;
+                padding-top: 5px;
+                text-align: end;
+            }
+
+            #btnLeft2, #btnRight2{
+                color:deeppink;
+                font-size:20px;
+                font-weight:bold;
+            }
+
+            #btnLeft2[disabled], #btnRight2[disabled]{
+                color:pink;
+                font-size:20px;
+                font-weight:bold;
+            }
+            /* 想吃什麼-以上 */
+            .where_to_eat .section{
+                width: calc(33.333333% - 48px);
+            }
+            .restaurant_detail{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .restaurant_detail_item{
+                width: calc(50% - 42px);
+                display: flex;
+                padding: 10px;
+                background-color: white;
+                border: 1px solid white;
+                border-radius: 3px;
+                margin-bottom: 15px;
+                box-shadow: 0 0 30px rgba(0,0,0,.1);
+                margin: 10px;
+            }
+            .restaurant_detail_item_pic{
+                width: 40%;
+                margin-right: 5px;
+            }
+            .restaurant_detail_item_txt{
+                width: calc(25% - 11px);
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                background-color: white;
+                padding: 15px;
+            }
+            .footer_color{
+                width: 100%;
+                background-color: rgb(117, 117, 117);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .footer_bar{
+                width: 100%;
+                margin: auto;
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            .footer_bar .footer_logo{
+                width: 140px;
+                height: 50px;
+                margin-right: auto;
+            }
+            .footer_bar .footer_logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .footer_bar h2{
+                margin-right: 5px;
+                color: white;
+            }
+            .footer_bar button{
+                font-size: 16px;
+                width: 50px;
+                height: 35px;
+                background-color: orange;
+                color: white;
+                
+            }
+            .footer .subscribe input{
+                font-size:16px;
+                height:30px;
+                width:200px; 
+                border: 1px solid black;
+            }
+            .about{
+                width: 90%;
+                margin: auto;
+                display: flex;
+            }
+            .know_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .together_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .use_sometrip{
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+            }
+            .contact_us{
+                width: 25%;
+            }
+            .footer .about p{
+                font-size: 16px;
+                color: white;
+                margin-bottom: 10px;
+            }
+            .footer .about a{
+                text-decoration: none;
+                font-size: 15px;
+                color:black;
+                padding: 5px;    
+            }
+            .app{
+                display: flex;
+            }
+            .app .app_pic{
+                width: 30px;
+                height: 30px;
+                margin: 10px;
+            }
+            .app .app_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            
+            
+            
+        }
+
+        @media screen and (min-width:1200px) {
+            .title_bar{
+                margin: auto;
+                display: flex;
+                align-items: center; 
+                background-color: #aaa; 
+                margin: 0 15px;
+                position: fixed;
+                margin: 0;
+                left: 0;
+                right: 0;
+                z-index: 1;
+            }
+            .title_bar .logo{
+                margin: 5px 20px;
+                width: 140px;
+                height: 50px;
+            }
+            .title_bar .logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .title_bar .search{
+                flex-grow: 1;
+            }
+            .title_bar .login a{
+                text-decoration: none;
+                font-size: 16px;
+                border: 2px;
+                border-radius: 15px;
+                background-color: rgb(248, 141, 0);
+                color: white;
+                padding: 10px;
+                margin-right: 15px;
+            }
+            .title_bar .login a:hover{
+                background-color: red;
+            }
+            .second_bar{
+                display: flex;
+                margin: 0 30px;
+                /* background-color: rgb(218, 139, 139); */
+                background-color: rgb(180, 179, 179); 
+                position: fixed;
+                margin: 0;
+                top: 60px;
+                left: 0;
+                right: 0;
+                z-index: 1;
+
+            }
+            .second_bar a{
+                text-decoration: none;
+                padding: 10px 0px;
+                margin-left: 30px;
+                font-size: 16px;
+                color: black;
+            }
+            .second_bar img{
+                width: 15px;
+                height: 15px;
+                vertical-align: top;
+            }
+
+            .bread{
+                width: 100%;
+                margin: auto;
+                margin-bottom: 45px;
+                padding-top: 110px;
+                padding-left: 20px;
+            }
+            .bread a{
+                text-decoration: none;
+                font-size: 15px;
+                padding: 10px;
+                color: rgb(85, 82, 255);
+                
+            }
+            .food_top_title{
+                width: 1200px;
+                margin: auto;
+                margin-bottom: 30px;
+                text-align: left;
+            }
+            .food_top_title h1{
+                font-size: 35px;
+                /* margin-bottom: 40px; */
+            }
+            .raiders{
+                width: 1200px;
+                margin: auto;
+            }
+            .raiders  .raiders_title{
+                margin-bottom: 20px;
+            }
+            .raiders  .raiders_title h2{
+                font-size: 25px;
+            }
+            .play{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 4px;
+            }
+            .item{
+                border: 1px solid rgb(134, 134, 134);
+                border-radius: 3px;
+                margin: 15px;
+                width: 268px;
+                height: 220px;
+                /* 彈性高度 */
+                display: flex;
+                flex-direction: column;
+            }
+            .item:hover{
+                box-shadow: 5px 5px 10px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .item_pic{
+                width: 268px;
+                height: 150px;
+                
+            }
+            .item_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            .item_txt{
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                background-color: white;
+            }
+            .item_txt h2{
+                margin-top: 13px;
+                margin-bottom: 5px;
+                line-height: 1.2em;
+            }
+            .hot_spot{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 60px;
+            }
+            .hot_spot_item{
+                width: 180px;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .hot_spot_item:hover{
+                box-shadow: 5px 5px 10px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .hot_spot_pic{
+                width: 180px;
+                height: 160px;
+                border: 1px solid rgb(134, 134, 134);
+                border-radius: 3px;
+                margin-bottom: -35px;
+                padding-left: -10px;
+            }
+            .hot_spot_pic img{
+                width: 100%;
+                height: 100%;
+            }
+            .hot_spot_txt{
+                font-size: 25px;
+                color: white;
+                background-color: rgb(0,0,0,.5);
+                font-weight: bold;
+                padding-left: 10px;
+            }
+            .itemPanel2{
+                display: none;
+            }
+            #leftRightPanel2{
+                display: none;
+            }
+            .want_to_eat_title{
+                display: block;
+            }
+            .want_to_eat{
+                display: block;
+            }
+            .want_to_eat_title{
+                width: 1200px;
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            .want_to_eat_title h2{
+                font-size: 35px;
+                text-align: start;
+            }
+            .want_to_eat{
+                width: 1200px;
+                margin: auto;
+                margin-bottom: 50px;
+            }
+            .want_to_eat .food_section_a{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .want_to_eat .food_section_a .food_item{
+                width: 130px;
+                margin: 10px;
+            }
+            .want_to_eat .food_section_a .food_item img{
+                width: 120px;
+                height: 120px;
+                border: 3px solid white;
+                border-radius: 50%;
+                margin-bottom: 10px;
+            }
+            .want_to_eat .food_section_a .food_item h3{
+                text-align: center;
+            }
+
+            .want_to_eat .food_section_b{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .want_to_eat .food_section_b .food_item{
+                width: 130px;
+                margin: 10px;
+            }
+            .want_to_eat .food_section_b .food_item img{
+                width: 120px;
+                height: 120px;
+                border: 3px solid white;
+                border-radius: 50%;
+                margin-bottom: 10px;
+                object-fit: cover;
+            }
+            .want_to_eat .food_section_b .food_item h3{
+                text-align: center;
+            }
+            .where_to_eat_title{
+                width: 1200px;
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            .where_to_eat_title h1{
+                font-size: 25px;
+            }
+            .where_to_eat{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 50px;
+            }
+            .where_to_eat .section{
+                width: 152px;
+                margin: 15px;
+                display: flex;
+                align-items: center;
+                border: 1px solid white;
+                border-radius: 3px;
+                padding: 8px;
+                background-color: white;
+            }
+            .where_to_eat .section:hover{
+                box-shadow: 5px 5px 5px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .where_to_eat .section img{
+                width:18px;
+                height: 18px;
+                margin-right: 5px;
+            }
+            .where_to_eat .section h2{
+                font-size: 20px;
+            }
+            .choose_res_for_phone select{
+                display: none;
+            }
+            .all_restaurant .choose_food{
+                display: block;
+            }
+            .all_restaurant_title{
+                width: 1200px;
+                margin: auto;
+                margin-bottom: 30px;
+            }
+            .all_restaurant_title h1{
+                font-size: 25px;
+            }
+            .all_restaurant{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+                padding: 10px;
+            }
+            .all_restaurant .choose_food{
+                width: 292px;
+                height: 2050px;
+                background-color:white;
+                border: 1px solid white;
+                border-radius: 3px;
+                margin-right: 15px;
+                box-shadow: 0 0 10px rgba(0,0,0,.1);
+            }
+            .all_restaurant .choose_food img{
+                width: 270px;
+                height: 200px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            .all_restaurant .choose_food h2{
+                font-size: 20px;
+                padding: 5px 10px;
+                margin-left: 5px;
+            }
+            .choose_food_item{
+                padding: 5px 10px;
+                display: flex;
+                align-items: center;
+                margin-left: 5px;
+            }
+            .choose_food_item p{
+                padding-top: 3px;
+            }
+            .restaurant_detail{
+                width: 900px;
+            }
+            .restaurant_detail .find_restaurant{
+                width: 900px;
+                height: 50px;
+                background-color: white;
+                margin-bottom: 15px;
+                border: 1px solid white;
+                border-radius: 3px;
+                box-shadow: 0 0 10px rgba(0,0,0,.1);
+            }
+            .restaurant_detail .find_restaurant p{
+                font-size: 20px;
+                font-weight: bold;
+                margin-left: 20px;
+                margin-top: 15px;
+            }
+            .restaurant_detail_item{
+                width: 100%;
+                padding: 10px;
+                background-color: white;
+                border: 1px solid white;
+                border-radius: 3px;
+                margin-bottom: 15px;
+                box-shadow: 0 0 30px rgba(0,0,0,.1);
+            }
+            .restaurant_detail_item:hover{
+                box-shadow: 5px 5px 5px rgba(0,0,0,0.2);  
+                transform: translate3d(0,-5px,0);
+                transition-duration: 0.3s;  
+                /* transform: scale(1.5,1.5); */
+                /* transform: skew(30deg,0); */
+            }
+            .restaurant_detail_item_pic{
+                margin-right: 10px;
+            }
+            .restaurant_detail_item_pic img{
+                width: 350px;
+                height: 200px;
+            }
+            /* .restaurant_detail_item_pic img.radius{
+                border-radius: 5px;
+            } */
+            .restaurant_detail_item_txt{
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                background-color: white;
+                padding: 15px;
+            }
+            .restaurant_detail_item_txt .words h2{
+                font-size: 25px;
+                margin-bottom: 5px;
+            }
+            .restaurant_detail_item_txt .words p{
+                font-size: 15px;
+                color: grey;
+                margin-bottom: 5px;
+            }
+            .restaurant_detail_item_txt .hot_points{
+                display: flex;
+                flex-grow: 1;
+            }
+            .restaurant_detail_item_txt .hot_points h2{
+                font-size: 16px;
+                color: orange;
+                margin-right: 8px;
+            }
+            .restaurant_detail_item_txt .hot_points p{
+                font-size: 15px;
+                color: grey;
+                padding-top: 2px;
+            }
+            .restaurant_price{
+                display: flex;
+                align-items: center;
+                
+            }
+            .restaurant_price .discount h2{
+                font-size: 18px;
+                background-color: rgb(255, 101, 29);
+                color: white;
+                padding: 3px;
+                border: 1px solid rgb(255, 101, 29);
+                border-radius: 2px;
+                margin-right: 3px;
+            }
+            .restaurant_price .voucher p{
+                font-size: 16px;
+                color: grey;
+                margin-right: 3px;
+            }
+            .restaurant_price .price h2{
+                font-size: 20px;
+            }
+            .footer_color{
+                width: 100%;
+                background-color: rgb(117, 117, 117);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .footer_bar{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+                flex-grow: 1;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            .footer_bar .footer_logo{
+                width: 140px;
+                height: 50px;
+                margin-right: auto;
+            }
+            .footer_bar .footer_logo img{
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+            .footer_bar h2{
+                margin-right: 5px;
+                color: white;
+            }
+            .footer_bar button{
+                font-size: 16px;
+                width: 50px;
+                height: 35px;
+                background-color: orange;
+                color: white;
+                
+            }
+            .footer .subscribe input{
+                font-size:16px;
+                height:30px;
+                width:200px; 
+                border: 1px solid black;
+            }
+            .about{
+                width: 1200px;
+                margin: auto;
+                display: flex;
+            }
+            .know_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .together_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .use_sometrip{
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+            }
+            .contact_us{
+                width: 300px;
+            }
+            .footer .about p{
+                font-size: 16px;
+                color: white;
+                margin-bottom: 10px;
+            }
+            .footer .about a{
+                text-decoration: none;
+                font-size: 15px;
+                color:black;
+                padding: 5px;    
+            }
+            .app{
+                display: flex;
+            }
+            .app .app_pic{
+                width: 30px;
+                height: 30px;
+                margin: 10px;
+            }
+            .app .app_pic img{
+                width: 100%;
+                height: 100%;
+            }
+
+            
+            
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="menu-control">
+    
+    <div class="title_bar">
+        <div class="logo">
+            <a href="RWD-homepage.html">
+                <img src="pic/sometrip.png" alt="">
+            </a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="探索目的地/活動" style ="font-size:16px;height:30px;width:200px;border-radius: 15px; border: 1px solid white;">
+        </div>
+        <div class="login">
+            <a href="#">登入</a>
+        </div>
+        <label for="menu-control" class="hb">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+    <nav class="second_bar">
+        <a href="#" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">探索目的地</a>
+        <a href="RWD-howtoplay.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">特色體驗</a>
+        <a href="RWD-food.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">美食品嘗</a>
+        <a href="RWD-wificard.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">網路卡</a>
+        <a href="RWD-mustknow.html" style="color:black; font-weight:normal" 
+        onMouseOver="this.style.color='white';this.style.fontWeight='bold'" 
+        onMouseOut="this.style.color='black';this.style.fontWeight='normal'">出國須知</a>
+    </nav>
+
+    <div class="bread">
+        <a href="RWD-homepage.html">首頁 ></a>
+        <a href="#">台灣 ></a>
+        <a href="#">台北 ></a>
+        <a href="#" style="color: gray;">台北餐廳</a>
+    </div>
+
+    <div class="food_top_title">
+        <h1>美食品嘗 · 台北</h1>
+    </div>
+
+    <div class="raiders">
+        <div class="raiders_title">
+            <h2>美食攻略</h2>
+        </div>
+
+        <div class="play">
+            <div class="item">
+                <div class="item_pic">
+                    <img src="pic/buyone.jpg" alt="">
+                </div>
+                <div class="item_txt">   
+                    <h2>美食饗宴買1送1</h2>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item_pic">
+                    <img src="pic/kitc.jpg" alt="">
+                </div>
+                <div class="item_txt">
+                    <h2>微大廚。我家廚房</h2>    
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item_pic">
+                    <img src="pic/eatfull.jpg" alt="">
+                </div>
+                <div class="item_txt">
+                    <h2>【2021推薦】吃到飽狂歡7折起!</h2>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item_pic">
+                    <img src="pic/takeaway.webp" alt="">
+                </div>
+                <div class="item_txt">
+                    <h2>【2021推薦】外帶宅配美味!</h2>
+                </div>
+            </div>
+        </div>
+        <div class="hot_spot">
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/sing1.jpg" alt="">
+                </div>
+                <div class="hot_spot_txt">振興優待</div>
+            </div>
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/take01.jfif" alt="">
+                </div>
+                <div class="hot_spot_txt">外帶</div>
+            </div>
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/take02.jpg" alt="">
+                </div>
+                <div class="hot_spot_txt">宅配美食</div>
+            </div>
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/veg.jpg" alt="">
+                </div>
+                <div class="hot_spot_txt">蔬菜箱</div>
+            </div>
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/moneyy.jpg" alt="">
+                </div>
+                <div class="hot_spot_txt">現金券</div>
+            </div>
+            <div class="hot_spot_item">
+                <div class="hot_spot_pic">
+                    <img src="pic/sentcup.jpg" alt="">
+                </div>
+                <div class="hot_spot_txt">寄杯寄餐</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="want_to_eat_title">
+        <h2>今天想吃什麼好料?</h2>
+    </div>
+
+    <!-- 手機板-想吃什麼-以下-->
+    <div class="itemPanel1">    
+        <div class="wrap1">
+            <div class="food_section1">
+                <div class="item1">
+                    <img src="pic/chin.jpg" alt="">
+                    <h3>中式</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/jap.jpg" alt="">
+                    <h3>日本料理</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/yii.jpg" alt="">
+                    <h3>義式</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/ham.jpg" alt="">
+                    <h3>美式</h3>
+                </div>
+            </div>
+            <div class="food_section1">
+                <div class="item1">
+                    <img src="pic/tai.jpg" alt="">
+                    <h3>台式</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/thaiii.jpg" alt="">
+                    <h3>泰式</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/yue.jfif" alt="">
+                    <h3>粵菜</h3>
+                </div>        
+                <div class="item1">
+                    <img src="pic/han.jfif" alt="">
+                    <h3>韓式</h3>
+                </div>
+            </div>
+            <div class="food_section1">
+                <div class="item1">
+                    <img src="pic/dinner.webp" alt="">
+                    <h3>晚餐</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/lunch.webp" alt="">
+                    <h3>午餐</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/pot.jpg" alt="">
+                    <h3>火鍋</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/cof.jpg" alt="">
+                    <h3>咖啡店</h3>
+                </div>
+            </div>
+            <div class="food_section1">
+                <div class="item1">
+                    <img src="pic/lowprice.jpg" alt="">
+                    <h3>平價餐廳</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/des.jpg" alt="">
+                    <h3>甜點</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/wine.webp" alt="">
+                    <h3>餐酒館</h3>
+                </div>
+                <div class="item1">
+                    <img src="pic/shake.jpg" alt="">
+                    <h3>飲料店</h3>
+                </div>
+            </div>    
+        </div>
+
+    </div>
+    <div id="leftRightPanel1">
+        <input type="button" id="btnLeft1" value="<"  disabled>
+        <input type="button" id="btnRight1" value=">" >
+    </div>
+
+    <script type="text/javascript">
+        let curIndex = 0;
+        
+        window.addEventListener("load",function(){
+            //-------btnRight.onclick
+            document.getElementById("btnRight1").onclick = function(){
+                curIndex++;
+                let wrap = document.querySelector(".wrap1");
+                wrap.style.left = -410 * curIndex + "px";
+                if(curIndex == 3){
+                    document.getElementById("btnRight1").disabled = true; //不可按
+                }
+                document.getElementById("btnLeft1").disabled = false; //可按
+            }
+            //-------btnLeft.onclick
+            document.getElementById("btnLeft1").onclick = function(){
+                curIndex--;
+                let wrap = document.querySelector(".wrap1");
+                wrap.style.left = -410 * curIndex + "px";
+                if(curIndex == 0){
+                    document.getElementById("btnLeft1").disabled = true; //不可按
+                }
+                document.getElementById("btnRight1").disabled = false; //可按
+            }
+        }, false);
+        
+    </script> 
+    <!-- 手機板-想吃什麼-以上-->
+
+    <!-- 768px-想吃什麼-以下 -->
+    <div class="itemPanel2">    
+        <div class="wrap2">
+            <div class="food_section2">
+                <div class="item2">
+                    <img src="pic/chin.jpg" alt="">
+                    <h3>中式</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/jap.jpg" alt="">
+                    <h3>日本料理</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/yii.jpg" alt="">
+                    <h3>義式</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/ham.jpg" alt="">
+                    <h3>美式</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/tai.jpg" alt="">
+                    <h3>台式</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/thaiii.jpg" alt="">
+                    <h3>泰式</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/yue.jfif" alt="">
+                    <h3>粵菜</h3>
+                </div>        
+                <div class="item2">
+                    <img src="pic/han.jfif" alt="">
+                    <h3>韓式</h3>
+                </div>
+            </div>
+            <div class="food_section2">
+                <div class="item2">
+                    <img src="pic/dinner.webp" alt="">
+                    <h3>晚餐</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/lunch.webp" alt="">
+                    <h3>午餐</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/pot.jpg" alt="">
+                    <h3>火鍋</h3>
+                </div>        
+                <div class="item2">
+                    <img src="pic/cof.jpg" alt="">
+                    <h3>咖啡店</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/lowprice.jpg" alt="">
+                    <h3>平價餐廳</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/des.jpg" alt="">
+                    <h3>甜點</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/wine.webp" alt="">
+                    <h3>餐酒館</h3>
+                </div>
+                <div class="item2">
+                    <img src="pic/shake.jpg" alt="">
+                    <h3>飲料店</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="leftRightPanel2">
+        <input type="button" id="btnLeft2" value="<"  disabled>
+        <input type="button" id="btnRight2" value=">" >
+    </div>
+    <script type="text/javascript">
+        let curIndex1 = 0;
+        
+        window.addEventListener("load",function(){
+            //-------btnRight.onclick
+            document.getElementById("btnRight2").onclick = function(){
+                curIndex1++;
+                let wrap = document.querySelector(".wrap2");
+                wrap.style.left = -755 * curIndex1 + "px";
+                if(curIndex1 == 1){
+                    document.getElementById("btnRight2").disabled = true; //不可按
+                }
+                document.getElementById("btnLeft2").disabled = false; //可按
+            }
+            //-------btnLeft.onclick
+            document.getElementById("btnLeft2").onclick = function(){
+                curIndex1--;
+                let wrap = document.querySelector(".wrap2");
+                wrap.style.left = -755 * curIndex1 + "px";
+                if(curIndex1 == 0){
+                    document.getElementById("btnLeft2").disabled = true; //不可按
+                }
+                document.getElementById("btnRight2").disabled = false; //可按
+            }
+        }, false);
+    
+    </script> 
+    <!-- 768px-想吃什麼-以上 -->
+    
+    <div class="want_to_eat">
+        <div class="food_section_a">
+            <div class="food_item">
+                <img src="pic/chin.jpg" alt="">
+                <h3>中式</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/jap.jpg" alt="">
+                <h3>日本料理</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/yii.jpg" alt="">
+                <h3>義式</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/ham.jpg" alt="">
+                <h3>美式</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/tai.jpg" alt="">
+                <h3>台式</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/thaiii.jpg" alt="">
+                <h3>泰式</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/yue.jfif" alt="">
+                <h3>粵菜</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/han.jfif" alt="">
+                <h3>韓式</h3>
+            </div>
+        </div>
+
+        <div class="food_section_b">
+            <div class="food_item">
+                <img src="pic/dinner.webp" alt="">
+                <h3>晚餐</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/lunch.webp" alt="">
+                <h3>午餐</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/pot.jpg" alt="">
+                <h3>火鍋</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/cof.jpg" alt="">
+                <h3>咖啡店</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/lowprice.jpg" alt="">
+                <h3>平價餐廳</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/des.jpg" alt="">
+                <h3>甜點</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/wine.webp" alt="">
+                <h3>餐酒館</h3>
+            </div>
+            <div class="food_item">
+                <img src="pic/shake.jpg" alt="">
+                <h3>飲料店</h3>
+            </div>
+        </div>
+    </div>
+    <div class="where_to_eat_title">
+        <h1>走到哪, 吃到哪</h1>
+    </div>
+    <div class="where_to_eat">
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>大安區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>中山區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>信義區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>中正區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>松山區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>萬華區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>大同區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>內湖區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>士林區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>文山區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>北投區</h2>
+        </div>
+        <div class="section">
+            <img src="pic/place1.png" alt="">
+            <h2>南港區</h2>
+        </div>
+    </div>
+    <div class="all_restaurant_title">
+        <h1>所有餐廳</h1>
+    </div>
+    <div class="choose_res_for_phone">
+        <select name="" id="">
+            <option value="">各國菜系</option>
+            <option value="">全部美食</option>
+            <option value="">晚餐</option>
+            <option value="">午餐</option>
+            <option value="">中式</option>
+            <option value="">火鍋</option>
+            <option value="">平價餐廳</option>
+            <option value="">日本料理</option>
+            <option value="">甜點</option>
+            <option value="">飲料吧</option>
+            <option value="">酒吧</option>
+            <option value="">西餐廳</option>
+            <option value="">街頭小吃</option>
+            <option value="">下午茶</option>
+            <option value="">自助餐</option>
+            <option value="">經濟實惠</option>
+            <option value="">早午餐</option>
+            <option value="">海鮮</option>
+            <option value="">小吃店</option>
+            <option value="">早餐</option>
+            <option value="">義式</option>
+            <option value="">高級餐廳</option>
+            <option value="">美式</option>
+            <option value="">麵條</option>
+            <option value="">咖啡店</option>
+            <option value="">Pizza</option>
+            <option value="">果汁</option>
+            <option value="">蛋奶素食</option>
+            <option value="">泰式</option>
+            <option value="">炸雞</option>
+            <option value="">漢堡</option>
+            <option value="">韓式</option>
+            <option value="">健康食品</option>
+            <option value="">麵包店</option>
+            <option value="">三明治</option>
+            <option value="">素食餐廳</option>
+            <option value="">茶餐廳</option>
+            <option value="">點心</option>
+            <option value="">法式</option>
+            <option value="">咖哩</option>
+            <option value="">居酒屋</option>
+            <option value="">外送</option>
+            <option value="">快餐</option>
+            <option value="">外帶</option>
+            <option value="">壽司</option>
+            <option value="">沙拉</option>
+            <option value="">湯</option>
+            <option value="">清蒸餐廳</option>
+            <option value="">西班牙菜</option>
+            <option value="">越南菜</option>
+            <option value="">德式</option>
+            <option value="">丼飯</option>
+            <option value="">牛丼</option>
+            <option value="">關東煮</option>
+            <option value="">馬來菜</option>
+            <option value="">水餃</option>
+            <option value="">生蠔吧</option>
+            <option value="">小吃前菜</option>
+        </select>
+    </div>
+    <div class="all_restaurant">
+        <div class="choose_food">
+            <img src="pic/resss.jpg" alt="">
+            <h2>各國菜系</h2>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>全部美食</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>晚餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>午餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>中式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>火鍋</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>平價餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>日本料理</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>甜點</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>飲料店</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>酒吧</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>西餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>街頭小吃</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>下午茶</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>自助餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>經濟實惠</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>早午餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>牛排</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>海鮮</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>小吃店</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>早餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>義式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>BBQ</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>高級餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>美式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>麵條</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>咖啡店</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>比薩</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>果汁</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>蛋奶素食</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>泰式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>炸雞</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>漢堡</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>韓式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>健康食品</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>麵包店</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>三明治</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>素食餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>茶餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>點心</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>法式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>咖哩</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>居酒屋</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>外送</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>快餐</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>外帶</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>壽司</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>沙拉</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>湯</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>清珍餐廳</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>西班牙菜</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>越南菜</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>德式</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>丼飯</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>牛丼</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>關東煮</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>馬來菜</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>水餃</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>生蠔吧</p>
+            </div>
+            <div class="choose_food_item">
+                <input type="radio" name="restaurant"style="WIDTH: 17px; HEIGHT: 17px">
+                <p>小吃前菜</p>
+            </div>
+            
+        </div>
+        <div class="restaurant_detail">
+            <div class="find_restaurant">
+                <p>找到579間餐廳</p>
+            </div>
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <a href="RWD-foodinfo.html"><img src="pic/rice.jpg" alt=""></a>
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <a href="RWD-foodinfo.html" style="text-decoration: none; color:black"><h2>大和丼 台北合江店 | 捷運中山國中站</h2></a>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/rice.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant_detail_item">
+                <div class="restaurant_detail_item_pic">
+                    <img src="pic/steak.jpg" alt="">
+                </div>
+                <div class="restaurant_detail_item_txt">
+                    <div class="words">
+                        <h2>大和丼 台北合江店 | 捷運中山國中站</h2>
+                        <p>丼飯咖哩 · 中山區</p>
+                    </div>
+                    <div class="hot_points">
+                        <h2>★4.5</h2>
+                        <p>3則評價|50+人參加過</p>
+                    </div>
+                    <div class="restaurant_price">
+                        <div class="discount">
+                            <h2>25% OFF</h2>
+                        </div>
+                        <div class="voucher">
+                            <p>TWD100 現金抵用券</p>
+                        </div>
+                        <div class="price">
+                            <h2>NT$ 75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="for_pages">
+        <div class="pages">
+            <a href="#"><img src="pic/next1.png" alt=""></a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">7</a>
+            <a href="#"><img src="pic/next.png" alt=""></a>
+        </div>
+    </div>
+    <div class="footer_color">
+        <div class="footer">
+            <div class="footer_bar">
+                <div class="footer_logo">
+                    <img src="pic/sometrip.png" alt="">
+                </div>
+                <h2>立即收到最新資訊</h2>
+                <div class="subscribe">
+                    <input type="text" placeholder="輸入電子信箱" style ="font-size:16px;height:30px;width:200px; border: 1px solid black;">
+                </div>
+                <button>訂閱</button>
+            </div>
+            <div class="about">
+                <div class="know_sometrip">
+                    <p>認識SOMETRIP</p>
+                    <a href="#">關於SOMETRIP</a>
+                    <a href="#">SOMETRIP旅遊攻略</a>
+                    <a href="#">加入SOMETRIP</a>
+                </div>
+                <div class="together_sometrip">
+                    <p>攜手SOMETRIP</p>
+                    <a href="#">供應商註冊</a>
+                    <a href="#">供應商登入</a>
+                    <a href="#">聯合行銷</a>
+                    <a href="#">名人合作</a>
+                    <a href="#">同業交易</a>
+                    <a href="#">數位解決方案</a>
+                    <a href="#">分銷&行銷提案</a>
+                </div>
+                <div class="use_sometrip">
+                    <p>使用條款</p>
+                    <a href="#">使用條款</a>
+                    <a href="#">隱私政策</a>
+                    <a href="#">Cookie政策</a>
+                    <a href="#">技術問題懸賞方案</a>
+                </div>
+                <div class="contact_us">
+                    <p>聯絡我們</p>
+                    <div class="app">
+                        <div class="app_pic">
+                            <img src="pic/facebook.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/instagram.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/twitter.png" alt="">
+                        </div>
+                        <div class="app_pic">
+                            <img src="pic/wechat.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><button type="button" id="BackTop" class="toTop-arrow"></button>
+    <script>
+    $(function(){
+        $('#BackTop').click(function(){ 
+            $('html,body').animate({scrollTop:0}, 333);
+        });
+        $(window).scroll(function() {
+            if ( $(this).scrollTop() > 300 ){
+                $('#BackTop').fadeIn(222);
+            } else {
+                $('#BackTop').stop().fadeOut(222);
+            }
+        }).scroll();
+    });
+    </script>
+
+</body>
+</html>
